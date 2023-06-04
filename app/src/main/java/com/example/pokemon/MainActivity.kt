@@ -4,14 +4,12 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.lifecycle.lifecycleScope
+import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pokemon.api_service.RetrofitInstance
-import com.example.pokemon.api_service.model.Pokemon
-import com.example.pokemon.api_service.model.PokemonSprite
+import com.example.pokemon.components.showPokemons
 import com.example.pokemon.data.repository.PokemonRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
+import com.example.pokemon.viewmodels.PokemonListViewModel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -21,7 +19,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            main()
+            showPokemons()
         }
     }
 
@@ -35,17 +33,23 @@ class MainActivity : ComponentActivity() {
 
     private suspend fun getPokemons() {
         val repository = PokemonRepository(RetrofitInstance.api)
-        while (true) {
-            val pokemonList = repository.getPokemons()
-            if (pokemonList.isEmpty()) {
-                break
-            }
-            pokemonList.forEach { pokemon ->
-                Log.d(TAG, "Pokemon: ${pokemon.name}")
-                Log.d(TAG, "Pokemon: ${pokemon.sprites}")
-            }
+        val pokemons = repository.getPokemons()
+        pokemons.forEach { pokemon ->
+            Log.d(TAG, "getPokemons: ${pokemon.name}")
+            Log.d(TAG, "getPokemons: ${pokemon.sprites.front_shiny}")
         }
-
-
     }
 }
+
+//while (true) {
+//    val pokemonList = repository.getPokemons()
+//    if (pokemonList.isEmpty()) {
+//        break
+//    }
+//    pokemonList.forEach { pokemon ->
+//        Log.d(TAG, "Pokemon: ${pokemon.name}")
+//        Log.d(TAG, "Pokemon: ${pokemon.sprites}")
+//    }
+//}
+
+
