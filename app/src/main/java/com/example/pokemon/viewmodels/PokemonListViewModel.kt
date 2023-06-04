@@ -1,5 +1,6 @@
 package com.example.pokemon.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,8 @@ import java.util.concurrent.Flow
 
 class PokemonListViewModel(): ViewModel() {
 
+    val TAG = "!!!"
+
     private val repository = PokemonRepository(RetrofitInstance.api)
     private val _pokemonList = MutableLiveData<List<Pokemon>>()
     val pokemonList: LiveData<List<Pokemon>> = _pokemonList
@@ -21,6 +24,7 @@ class PokemonListViewModel(): ViewModel() {
         viewModelScope.launch {
             val pokemons = repository.getPokemons()
             _pokemonList.value = pokemons
+            Log.d(TAG, "fetchPokemons: ${_pokemonList.value}")
         }
     }
 

@@ -12,12 +12,18 @@ class PokemonRepository(private val pokemonApi: PokemonApi) {
     suspend fun getPokemons(): List<Pokemon> {
         val response = pokemonApi.getPokemons()
 //        offset += limit
-        val pokemonList = response.results.map { pokemonResult ->
-            val pokemonId = pokemonResult.url
-                .removeSuffix("/")
-                .substringAfterLast("/")
-                .toInt()
-            pokemonApi.getPokemon(pokemonId)
+
+
+        val pokemonList = response.results.mapIndexedNotNull { index, pokemonResult ->
+            if (index % 3 == 0) {
+                val pokemonId = pokemonResult.url
+                    .removeSuffix("/")
+                    .substringAfterLast("/")
+                    .toInt()
+                pokemonApi.getPokemon(pokemonId)
+            } else {
+                null
+            }
         }
         return pokemonList
     }
