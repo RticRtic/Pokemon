@@ -5,14 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pokemon.api_service.ApiConstants
 import com.example.pokemon.api_service.RetrofitInstance
 import com.example.pokemon.api_service.model.Pokemon
-import com.example.pokemon.api_service.model.PokemonResult
 import com.example.pokemon.data.repository.PokemonRepository
 import kotlinx.coroutines.launch
-import java.util.concurrent.Flow
 
-class PokemonListViewModel(): ViewModel() {
+class PokemonListViewModel() : ViewModel() {
 
     val TAG = "!!!"
 
@@ -20,14 +19,36 @@ class PokemonListViewModel(): ViewModel() {
     private val _pokemonList = MutableLiveData<List<Pokemon>>()
     val pokemonList: LiveData<List<Pokemon>> = _pokemonList
 
+    private var isLoading = false
+    var totalPokemonCount = 0
+
+    init {
+        fetchPokemons()
+    }
+
     fun fetchPokemons() {
         viewModelScope.launch {
-            val pokemons = repository.getPokemons()
+            val pokemons =
+                repository.pokemons(ApiConstants.DEFAULT_LIMIT, ApiConstants.DEFAULT_OFFSET)
             _pokemonList.value = pokemons
-            Log.d(TAG, "fetchPokemons: ${_pokemonList.value}")
+            totalPokemonCount = pokemons.size
+
         }
     }
 
+    fun loadMorePokemons() {
+
+            viewModelScope.launch {
+
+                ApiConstants.DEFAULT_OFFSET += ApiConstants.DEFAULT_LIMIT
+                val pokemons = repository.pokemons(ApiConstants.DEFAULT_LIMIT, ApiConstants.DEFAULT_OFFSET)
+                val currentPokemons = _pokemonList.value.orEmpty()
+                _pokemonList.value = currentPokemons + pokemons
+                totalPokemonCount += pokemons.size
+
+            }
+
+    }
 
 
 }

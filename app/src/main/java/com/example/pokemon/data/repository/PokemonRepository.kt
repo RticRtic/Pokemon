@@ -6,12 +6,8 @@ import com.example.pokemon.api_service.model.Pokemon
 
 class PokemonRepository(private val pokemonApi: PokemonApi) {
 
-//    private var offset = 0
-//    private val limit = 20
-
-    suspend fun getPokemons(): List<Pokemon> {
-        val response = pokemonApi.getPokemons()
-//        offset += limit
+    suspend fun pokemons(limit: Int, offset: Int): List<Pokemon> {
+        val response = pokemonApi.getPokemons(limit, offset)
 
 
         val pokemonList = response.results.mapIndexedNotNull { index, pokemonResult ->

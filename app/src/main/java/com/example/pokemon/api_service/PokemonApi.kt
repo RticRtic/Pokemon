@@ -10,8 +10,8 @@ interface PokemonApi {
 
     @GET("pokemon/")
     suspend fun getPokemons(
-        @Query("limit") limit: Int = 50,
-        @Query("offset") offset: Int = 0
+       @Query("limit") limit: Int,
+       @Query("offset") offset: Int
     ): PokemonResponse
 
     @GET("pokemon/{id}/")
