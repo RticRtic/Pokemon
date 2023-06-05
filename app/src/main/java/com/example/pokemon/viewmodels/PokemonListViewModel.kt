@@ -37,18 +37,12 @@ class PokemonListViewModel() : ViewModel() {
     }
 
     fun loadMorePokemons() {
-
             viewModelScope.launch {
-
                 ApiConstants.DEFAULT_OFFSET += ApiConstants.DEFAULT_LIMIT
                 val pokemons = repository.pokemons(ApiConstants.DEFAULT_LIMIT, ApiConstants.DEFAULT_OFFSET)
                 val currentPokemons = _pokemonList.value.orEmpty()
                 _pokemonList.value = currentPokemons + pokemons
                 totalPokemonCount += pokemons.size
-
             }
-
     }
-
-
 }

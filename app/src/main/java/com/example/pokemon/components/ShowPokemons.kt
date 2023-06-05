@@ -1,5 +1,6 @@
 package com.example.pokemon.components
 
+import android.os.Bundle
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,18 +14,16 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pokemon.viewmodels.PokemonListViewModel
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,12 +31,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.flow.distinctUntilChanged
+import androidx.navigation.NavController
+import com.example.pokemon.data.repository.PokemonRepository
 
 val TAG = "!!!"
 
 @Composable
-fun ShowPokemons() {
+fun ShowPokemons(navController: NavController, repository: PokemonRepository) {
     val viewModel: PokemonListViewModel = viewModel()
     val pokemonListState = viewModel.pokemonList.observeAsState(initial = emptyList())
 
@@ -47,7 +47,6 @@ fun ShowPokemons() {
 
     val pokemonList = pokemonListState.value
     val lazyGridState = rememberLazyGridState()
-
 
     LaunchedEffect(lazyGridState) {
         val visibleItemsInfo = lazyGridState.layoutInfo.visibleItemsInfo
@@ -80,7 +79,10 @@ fun ShowPokemons() {
                             modifier = Modifier
                                 .padding(8.dp)
                                 .background(Color.LightGray, RoundedCornerShape(50.dp))
-                                .clickable { },
+                                .clickable {
+                                    val pokemonData = pokemonList[pokemon]
+                                    navController.navigate("pokemonDetails/${pokemonData.id}")
+                                },
                             contentAlignment = Alignment.Center,
 
                             ) {
@@ -99,17 +101,10 @@ fun ShowPokemons() {
                     }
                     item {
                         LaunchedEffect(lazyGridState) {
-                                viewModel.loadMorePokemons()
+                            viewModel.loadMorePokemons()
 
                         }
                     }
-                }
-                if (pokemonList.size < viewModel.totalPokemonCount) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .align(Alignment.CenterHorizontally)
-                    )
                 }
             } else if (pokemonList.isEmpty()) {
                 CircularProgressIndicator(modifier = Modifier.size(48.dp))

@@ -8,8 +8,6 @@ class PokemonRepository(private val pokemonApi: PokemonApi) {
 
     suspend fun pokemons(limit: Int, offset: Int): List<Pokemon> {
         val response = pokemonApi.getPokemons(limit, offset)
-
-
         val pokemonList = response.results.mapIndexedNotNull { index, pokemonResult ->
             if (index % 3 == 0) {
                 val pokemonId = pokemonResult.url

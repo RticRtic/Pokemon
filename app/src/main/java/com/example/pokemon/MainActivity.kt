@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.navigation.compose.rememberNavController
+import com.example.pokemon.api_service.RetrofitInstance
+import com.example.pokemon.components.NavGraph
 import com.example.pokemon.components.ShowPokemons
+import com.example.pokemon.data.repository.PokemonRepository
 
 val TAG = "!!!"
 
@@ -12,22 +16,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-           ShowPokemons()
+           val navController = rememberNavController()
+            val repository = PokemonRepository(RetrofitInstance.api)
+            NavGraph(navController, repository)
         }
     }
 }
-
-
-
-//while (true) {
-//    val pokemonList = repository.getPokemons()
-//    if (pokemonList.isEmpty()) {
-//        break
-//    }
-//    pokemonList.forEach { pokemon ->
-//        Log.d(TAG, "Pokemon: ${pokemon.name}")
-//        Log.d(TAG, "Pokemon: ${pokemon.sprites}")
-//    }
-//}
 
 
