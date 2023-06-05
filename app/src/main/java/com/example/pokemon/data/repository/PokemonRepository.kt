@@ -21,7 +21,6 @@ class PokemonRepository(private val pokemonApi: PokemonApi) {
         }
         return pokemonList
     }
-
     suspend fun getSinglePokemon(id: Int): Pokemon {
         return pokemonApi.getPokemon(id)
     }

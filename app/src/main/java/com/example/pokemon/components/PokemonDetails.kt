@@ -2,18 +2,23 @@ package com.example.pokemon.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -89,13 +94,23 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
 //                }
 //            }
         }
-        Box(modifier = Modifier.fillMaxWidth().fillMaxHeight()) {
-            Column(modifier = Modifier.align(Alignment.BottomStart)) {
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()) {
+            Column(modifier = Modifier.align(Alignment.BottomCenter)) {
                 LazyVerticalGrid(columns = GridCells.Fixed(2)) {
                     items(stats?.size ?: 0) { index ->
                         val stat = stats?.get(index)
-                        Card(modifier = Modifier.wrapContentSize()) {
-                            Text(text = stat?.stat?.name ?: "")
+                        Box(modifier = Modifier
+                            .size(width = 100.dp, height = 100.dp)
+                            .padding(8.dp)
+                            .background(Color.Blue, RoundedCornerShape(10))) {
+                            Box(Modifier.fillMaxSize().padding(horizontal = 5.dp), contentAlignment = Alignment.CenterStart) {
+                                Text(text = stat?.stat?.name ?: "", style = TextStyle(color = Color.White, fontSize = 17.sp))
+                            }
+                            Box(Modifier.fillMaxSize().padding(horizontal = 5.dp), contentAlignment = Alignment.CenterEnd) {
+                                Text(text = stat?.base_stat.toString(), style = TextStyle(color = Color.White, fontSize = 17.sp))
+                            }
                         }
                     }
                 }

@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-           val navController = rememberNavController()
+            val navController = rememberNavController()
             val repository = PokemonRepository(RetrofitInstance.api)
             NavGraph(navController, repository)
         }

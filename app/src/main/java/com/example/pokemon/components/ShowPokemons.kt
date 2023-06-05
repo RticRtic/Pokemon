@@ -3,11 +3,13 @@ package com.example.pokemon.components
 import android.os.Bundle
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,17 +24,21 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pokemon.viewmodels.PokemonListViewModel
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.pokemon.api_service.model.EvolvedPokemon
 import com.example.pokemon.data.repository.PokemonRepository
+import okhttp3.internal.wait
 
 val TAG = "!!!"
 
@@ -59,8 +65,6 @@ fun ShowPokemons(navController: NavController, repository: PokemonRepository) {
     }
 
 
-
-
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -78,7 +82,15 @@ fun ShowPokemons(navController: NavController, repository: PokemonRepository) {
                         Box(
                             modifier = Modifier
                                 .padding(8.dp)
-                                .background(Color.LightGray, RoundedCornerShape(50.dp))
+                                .background(
+                                    color = RandomColor(),
+                                    shape = RoundedCornerShape(8.dp)
+                                )
+                                .border(
+                                    width = 1.dp,
+                                    color = Color.Black,
+                                    shape = RoundedCornerShape(8.dp)
+                                )
                                 .clickable {
                                     val pokemonData = pokemonList[pokemon]
                                     navController.navigate("pokemonDetails/${pokemonData.id}")
@@ -86,15 +98,21 @@ fun ShowPokemons(navController: NavController, repository: PokemonRepository) {
                             contentAlignment = Alignment.Center,
 
                             ) {
+
                             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Sprite(url = pokemonList[pokemon].sprites.front_default)
+                                Sprite(url = pokemonList[pokemon].sprites.front_shiny)
                                 Text(
-                                    text = pokemonList[pokemon].name,
+                                    text = pokemonList[pokemon].name.uppercase(),
                                     style = TextStyle(
                                         fontSize = 17.sp,
-                                        textAlign = TextAlign.Center
+                                        textAlign = TextAlign.Center,
+                                        fontWeight = FontWeight.Bold
                                     ),
-                                    modifier = Modifier.padding(bottom = 30.dp)
+                                    modifier = Modifier
+                                        .background(Color.LightGray)
+                                        .fillMaxWidth()
+                                        .height(40.dp)
+                                        .padding(top = 8.dp)
                                 )
                             }
                         }
@@ -115,5 +133,5 @@ fun ShowPokemons(navController: NavController, repository: PokemonRepository) {
 
         }
     }
-
 }
+

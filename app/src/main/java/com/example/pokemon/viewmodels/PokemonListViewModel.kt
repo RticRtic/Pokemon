@@ -7,19 +7,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokemon.api_service.ApiConstants
 import com.example.pokemon.api_service.RetrofitInstance
+import com.example.pokemon.api_service.model.EvolvedPokemon
 import com.example.pokemon.api_service.model.Pokemon
 import com.example.pokemon.data.repository.PokemonRepository
 import kotlinx.coroutines.launch
 
 class PokemonListViewModel() : ViewModel() {
 
-    val TAG = "!!!"
-
     private val repository = PokemonRepository(RetrofitInstance.api)
     private val _pokemonList = MutableLiveData<List<Pokemon>>()
     val pokemonList: LiveData<List<Pokemon>> = _pokemonList
-
-    private var isLoading = false
     var totalPokemonCount = 0
 
     init {
@@ -43,6 +40,7 @@ class PokemonListViewModel() : ViewModel() {
                 val currentPokemons = _pokemonList.value.orEmpty()
                 _pokemonList.value = currentPokemons + pokemons
                 totalPokemonCount += pokemons.size
+
             }
     }
 }
