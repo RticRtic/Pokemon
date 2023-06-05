@@ -109,7 +109,7 @@ fun ShowPokemons(navController: NavController, repository: PokemonRepository) {
                                         fontWeight = FontWeight.Bold
                                     ),
                                     modifier = Modifier
-                                        .background(Color.LightGray)
+                                        .background(Color.White, RoundedCornerShape(0.dp, 0.dp, 8.dp, 8.dp))
                                         .fillMaxWidth()
                                         .height(40.dp)
                                         .padding(top = 8.dp)
