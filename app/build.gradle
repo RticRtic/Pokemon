@@ -21,6 +21,12 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            res.srcDirs += 'src/main/res'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -84,6 +90,10 @@ dependencies {
     //Navigation
     def nav_version = "2.4.0-alpha10"
     implementation "androidx.navigation:navigation-compose:$nav_version"
+
+    //Material Icons
+    implementation 'androidx.compose.material:material-icons-core:1.4.3'
+    implementation 'androidx.compose.material:material-icons-extended:1.4.3'
 
 
 
