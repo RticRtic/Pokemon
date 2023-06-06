@@ -1,14 +1,12 @@
 package com.example.pokemon.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokemon.api_service.ApiConstants
 import com.example.pokemon.api_service.RetrofitInstance
-import com.example.pokemon.api_service.model.EvolvedPokemon
-import com.example.pokemon.api_service.model.Pokemon
+import com.example.pokemon.api_service.model.pokemon.Pokemon
 import com.example.pokemon.data.repository.PokemonRepository
 import kotlinx.coroutines.launch
 

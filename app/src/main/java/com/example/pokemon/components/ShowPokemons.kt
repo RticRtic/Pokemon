@@ -1,6 +1,5 @@
 package com.example.pokemon.components
 
-import android.os.Bundle
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -24,9 +23,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pokemon.viewmodels.PokemonListViewModel
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,9 +32,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.pokemon.api_service.model.EvolvedPokemon
 import com.example.pokemon.data.repository.PokemonRepository
-import okhttp3.internal.wait
+import kotlinx.coroutines.runBlocking
 
 val TAG = "!!!"
 
@@ -49,6 +44,7 @@ fun ShowPokemons(navController: NavController, repository: PokemonRepository) {
 
     LaunchedEffect(viewModel.pokemonList) {
         viewModel.fetchPokemons()
+        
     }
 
     val pokemonList = pokemonListState.value
@@ -61,9 +57,10 @@ fun ShowPokemons(navController: NavController, repository: PokemonRepository) {
 
         if (lastVisibleItemIndex >= totalItemsCount - 5) {
             viewModel.loadMorePokemons()
+
         }
     }
-
+    
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -83,7 +80,7 @@ fun ShowPokemons(navController: NavController, repository: PokemonRepository) {
                             modifier = Modifier
                                 .padding(8.dp)
                                 .background(
-                                    color = RandomColor(),
+                                    color = setRandomColor(),
                                     shape = RoundedCornerShape(8.dp)
                                 )
                                 .border(
@@ -94,6 +91,7 @@ fun ShowPokemons(navController: NavController, repository: PokemonRepository) {
                                 .clickable {
                                     val pokemonData = pokemonList[pokemon]
                                     navController.navigate("pokemonDetails/${pokemonData.id}")
+
                                 },
                             contentAlignment = Alignment.Center,
 
@@ -109,7 +107,10 @@ fun ShowPokemons(navController: NavController, repository: PokemonRepository) {
                                         fontWeight = FontWeight.Bold
                                     ),
                                     modifier = Modifier
-                                        .background(Color.White, RoundedCornerShape(0.dp, 0.dp, 8.dp, 8.dp))
+                                        .background(
+                                            Color.White,
+                                            RoundedCornerShape(0.dp, 0.dp, 8.dp, 8.dp)
+                                        )
                                         .fillMaxWidth()
                                         .height(40.dp)
                                         .padding(top = 8.dp)
