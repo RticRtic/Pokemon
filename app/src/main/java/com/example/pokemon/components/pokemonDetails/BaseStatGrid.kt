@@ -95,7 +95,7 @@ fun BaseStatGrid (stats: List<Stats>) {
                         )
                     }
                     Text(
-                        text = stat.stat.name ?: "",
+                        text = stat.stat.name,
                         style = TextStyle(color = Color.White, fontSize = 17.sp),
                         modifier = Modifier.padding(bottom = 4.dp)
                     )

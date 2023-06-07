@@ -12,7 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -22,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.pokemon.api_service.model.evolvedPokemon.EvolutionSpecies
 import com.example.pokemon.api_service.model.pokemon.Ability
 import com.example.pokemon.api_service.model.pokemon.Pokemon
 import com.example.pokemon.viewmodels.PokemonDetailsViewModel
@@ -54,7 +56,6 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
     val pokemonHeight = pokemon?.height
     val pokemonWeight = pokemon?.weight
     val pokemonAbilities: List<Ability>? = pokemon?.abilities
-    val evolvedForms: List<EvolutionSpecies>? = pokemon?.evolvedForms
 
 
     val roundedBottomCornerShape = RoundedCornerShape(
@@ -65,6 +66,17 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
     )
 
     Scaffold {
+
+
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
+            color = MaterialTheme.colorScheme.secondaryContainer
+        ) {
+
+        }
+
             DroppedDownToolBar(
                 roundedBottomCornerShape = roundedBottomCornerShape,
                 navController = navController,
@@ -83,10 +95,9 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
             Column(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 50.dp)
+                    .padding(bottom = 20.dp)
             ) {
-
-                EvolvedForms(evolvedForms = evolvedForms ?: emptyList())
+                AbilitiesBox(pokemonAbilities ?: emptyList(), pokemon)
                 Spacer(modifier = Modifier.height(10.dp))
                 BaseStatGrid(stats = stats ?: emptyList())
             }

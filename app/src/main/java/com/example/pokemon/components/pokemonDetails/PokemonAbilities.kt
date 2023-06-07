@@ -13,7 +13,16 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Eco
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Looks3
+import androidx.compose.material.icons.filled.LooksOne
+import androidx.compose.material.icons.filled.LooksTwo
+import androidx.compose.material.icons.filled.SpaceBar
+import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material.icons.filled.Tag
+import androidx.compose.material.icons.filled.TwoWheeler
+import androidx.compose.material.icons.filled.WaterDamage
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,12 +51,12 @@ fun PokemonAbilities(pokemonAbilities: List<Ability>) {
                     .padding(start = 5.dp, top = 10.dp, end = 4.dp, bottom = 5.dp)
                     .background(
                         color = Color.DarkGray,
-                        shape = RoundedCornerShape(0.dp, 0.dp, 30.dp, 30.dp)
+                        shape = RoundedCornerShape(10.dp)
                     )
                     .border(
                         width = 1.dp,
                         color = Color.Black,
-                        shape = RoundedCornerShape(0.dp, 0.dp, 30.dp, 30.dp)
+                        shape = RoundedCornerShape(10.dp)
                     ),
             ) {
                 Box(
@@ -69,9 +78,25 @@ fun PokemonAbilities(pokemonAbilities: List<Ability>) {
 
                         if (firstAttack) {
                             Icon(
-                                Icons.Default.Favorite,
-                                contentDescription = "Hp",
-                                tint = Color.Red
+                                Icons.Default.LooksOne,
+                                contentDescription = "Special",
+                                tint = Color.White
+                            )
+                        }
+
+                        if (secondAttack) {
+                            Icon(
+                                Icons.Default.LooksTwo,
+                                contentDescription = "Special",
+                                tint = Color.White
+                            )
+                        }
+
+                        if (thirdAttack) {
+                            Icon(
+                                Icons.Default.Looks3,
+                                contentDescription = "Special",
+                                tint = Color.White
                             )
                         }
                     }

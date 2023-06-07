@@ -1,6 +1,7 @@
 package com.example.pokemon.api_service.model.pokemon
 
 import android.os.Parcelable
+import com.example.pokemon.api_service.model.evolvedPokemon.EvolutionChain
 import com.example.pokemon.api_service.model.evolvedPokemon.EvolutionSpecies
 import kotlinx.parcelize.Parcelize
 
@@ -13,6 +14,10 @@ data class Pokemon(
     val height: Int,
     val weight: Int,
     val abilities: List<Ability>,
-    val evolvedForms: List<EvolutionSpecies>
-
+    val evolvedForms: List<EvolutionSpecies>?,
+    var species: Species,
+    val habitat: String?,
+    val genera: String?,
+    val evolutionChain: EvolutionChain?,
+    val flavorText: String,
     ): Parcelable

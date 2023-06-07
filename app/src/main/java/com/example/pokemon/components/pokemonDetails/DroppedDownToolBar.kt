@@ -1,6 +1,6 @@
 package com.example.pokemon.components.pokemonDetails
 
-import android.service.autofill.OnClickAction
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 import com.example.pokemon.api_service.model.pokemon.Ability
 import com.example.pokemon.api_service.model.pokemon.PokemonSprite
 import com.example.pokemon.components.Sprite
@@ -43,7 +44,7 @@ fun DroppedDownToolBar(
     pokemonAbilities: List<Ability>
 
 
-    ) {
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -51,12 +52,15 @@ fun DroppedDownToolBar(
             .background(setRandomColor(), shape = roundedBottomCornerShape)
             .border(1.dp, Color.Black, roundedBottomCornerShape)
     ) {
+        Column(modifier = Modifier.align(Alignment.Center)) {
+            BoxWithBackgroundImage(url = sprites.other?.officialArtwork?.front_default ?: "")
+        }
         Row(modifier = Modifier.align(Alignment.TopStart)) {
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = "Back",
-                    tint = Color.White
+                    tint = Color.Black
                 )
             }
             Text(
@@ -65,26 +69,43 @@ fun DroppedDownToolBar(
                 style = TextStyle(
                     fontSize = 24.sp,
                     textAlign = TextAlign.Start,
-                    color = Color.White
+                    color = Color.Black
                 )
             )
         }
 
-        Column(modifier = Modifier.align(Alignment.Center).padding(top = 20.dp)) {
+        Column(modifier = Modifier
+            .align(Alignment.Center)
+            .padding(top = 20.dp)) {
             Row {
                 Sprite(
-                    url = sprites.front_shiny,
-                    modifier = Modifier.size(height = 80.dp, width = 200.dp)
+                    url = "",
+                    modifier = Modifier.size(height = 200.dp, width = 200.dp)
                 )
                 Sprite(
-                    url = sprites.back_shiny,
-                    modifier = Modifier.size(height = 80.dp, width = 200.dp)
+                    url = "",
+                    modifier = Modifier.size(height = 200.dp, width = 200.dp)
                 )
-
-
             }
-            PokemonAbilities(pokemonAbilities = pokemonAbilities)
 
+            Box(modifier = Modifier.weight(1f)) {
+                Row(modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp),horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text(text = "Height: $pokemonHeight", style = TextStyle(color = Color.Black, fontSize = 20.sp))
+                    Text(text = "Weight: $pokemonWeight", style = TextStyle(color = Color.Black, fontSize = 20.sp))
+
+                }
+            }
         }
+    }
+}
+
+@Composable
+fun BoxWithBackgroundImage(url: String) {
+    Box(modifier = Modifier.size(200.dp)) {
+        Image(
+            painter = rememberImagePainter(data = url),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize()
+        )
     }
 }
