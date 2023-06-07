@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.pokemon.api_service.model.pokemon.Ability
 import com.example.pokemon.api_service.model.pokemon.PokemonSprite
 import com.example.pokemon.components.Sprite
 import com.example.pokemon.components.setRandomColor
@@ -38,6 +40,7 @@ fun DroppedDownToolBar(
     sprites: PokemonSprite,
     pokemonHeight: Int,
     pokemonWeight: Int,
+    pokemonAbilities: List<Ability>
 
 
     ) {
@@ -57,7 +60,7 @@ fun DroppedDownToolBar(
                 )
             }
             Text(
-                text = pokemonName?.uppercase() ?: "Loading ....",
+                text = pokemonName.uppercase(),
                 modifier = Modifier.padding(top = 8.dp),
                 style = TextStyle(
                     fontSize = 24.sp,
@@ -67,38 +70,21 @@ fun DroppedDownToolBar(
             )
         }
 
-        Column(modifier = Modifier.align(Alignment.Center)) {
-            Row() {
+        Column(modifier = Modifier.align(Alignment.Center).padding(top = 20.dp)) {
+            Row {
                 Sprite(
-                    url = sprites?.front_shiny ?: "",
-                    modifier = Modifier.size(height = 200.dp, width = 200.dp)
+                    url = sprites.front_shiny,
+                    modifier = Modifier.size(height = 80.dp, width = 200.dp)
                 )
                 Sprite(
-                    url = sprites?.back_shiny ?: "",
-                    modifier = Modifier.size(height = 200.dp, width = 200.dp)
+                    url = sprites.back_shiny,
+                    modifier = Modifier.size(height = 80.dp, width = 200.dp)
                 )
-            }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(5.dp),
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
 
-                pokemonHeight?.toString()?.let { height ->
-                    Text(
-                        "Height: $height",
-                        style = TextStyle(color = Color.White)
-                    )
-                }
-                pokemonWeight?.toString()?.let { weight ->
-                    Text(
-                        "Weight: $weight",
-                        style = TextStyle(color = Color.White)
-                    )
-                }
             }
+            PokemonAbilities(pokemonAbilities = pokemonAbilities)
+
         }
     }
 }

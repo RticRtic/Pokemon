@@ -1,6 +1,7 @@
 package com.example.pokemon.components.pokemonDetails
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,8 +26,7 @@ import com.example.pokemon.api_service.model.evolvedPokemon.EvolutionSpecies
 import com.example.pokemon.api_service.model.pokemon.Ability
 import com.example.pokemon.api_service.model.pokemon.Pokemon
 import com.example.pokemon.viewmodels.PokemonDetailsViewModel
-
-
+val TAG = "!!!"
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,6 +35,7 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
     val pokemonDetailState = remember {
         mutableStateOf<Pokemon?>(null)
     }
+
     LaunchedEffect(pokemonId) {
         viewModel.fetchPokemonDetails(pokemonId)
     }
@@ -55,6 +56,7 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
     val pokemonAbilities: List<Ability>? = pokemon?.abilities
     val evolvedForms: List<EvolutionSpecies>? = pokemon?.evolvedForms
 
+
     val roundedBottomCornerShape = RoundedCornerShape(
         topStart = CornerSize(0.dp),
         topEnd = CornerSize(0.dp),
@@ -70,6 +72,7 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
                 sprites = sprites ?: return@Scaffold,
                 pokemonHeight = pokemonHeight ?: 0,
                 pokemonWeight = pokemonWeight ?: 0,
+                pokemonAbilities = pokemonAbilities ?: emptyList()
             )
 
         Box(
@@ -86,39 +89,6 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
                 EvolvedForms(evolvedForms = evolvedForms ?: emptyList())
                 Spacer(modifier = Modifier.height(10.dp))
                 BaseStatGrid(stats = stats ?: emptyList())
-
-//                    pokemonAbilities?.forEach { ability ->
-//                       LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-//                           items(pokemonAbilities.size) { index ->
-//                               val abilities = pokemonAbilities[index]
-//                               Box(
-//                                   modifier = Modifier
-//                                       .size(width = 50.dp, height = 50.dp)
-//                                       .padding(8.dp)
-//                                       .background(
-//                                           color = Color.DarkGray,
-//                                           shape = RoundedCornerShape(10.dp)
-//                                       )
-//                               ) {
-//                                   Box(
-//                                       Modifier
-//                                           .fillMaxSize()
-//                                           .padding(horizontal = 5.dp),
-//                                       contentAlignment = Alignment.CenterStart
-//                                   ) {
-//                                       Text(
-//                                           text = abilities.ability.name,
-//                                           style = TextStyle(color = Color.White, fontSize = 17.sp)
-//                                       )
-//                                       Log.d(TAG, "PokemonDetails: ${ability.ability.name}")
-//                                   }
-//                               }
-//                           }
-//                       }
-//                    }
-//                }
-
-
             }
         }
     }

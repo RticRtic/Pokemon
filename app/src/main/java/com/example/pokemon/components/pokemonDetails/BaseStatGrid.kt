@@ -29,8 +29,8 @@ import com.example.pokemon.api_service.model.pokemon.Stats
 @Composable
 fun BaseStatGrid (stats: List<Stats>) {
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-        items(stats?.size ?: 0) { index ->
-            val stat = stats?.get(index)
+        items(stats.size) { index ->
+            val stat = stats[index]
 
             val iconHeart = index == 0
             val iconStar = index == 1
@@ -95,12 +95,12 @@ fun BaseStatGrid (stats: List<Stats>) {
                         )
                     }
                     Text(
-                        text = stat?.stat?.name ?: "",
+                        text = stat.stat.name ?: "",
                         style = TextStyle(color = Color.White, fontSize = 17.sp),
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
                     Text(
-                        text = stat?.base_stat.toString(),
+                        text = stat.base_stat.toString(),
                         style = TextStyle(color = Color.White, fontSize = 17.sp)
                     )
 

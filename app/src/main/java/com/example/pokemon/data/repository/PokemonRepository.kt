@@ -1,31 +1,41 @@
 package com.example.pokemon.data.repository
 
-import android.util.Log
+import com.example.pokemon.api_service.ApiConstants
 import com.example.pokemon.api_service.PokemonApi
 import com.example.pokemon.api_service.model.evolvedPokemon.EvolutionChain
-import com.example.pokemon.api_service.model.evolvedPokemon.EvolutionChainResponse
 import com.example.pokemon.api_service.model.evolvedPokemon.EvolutionSpecies
 import com.example.pokemon.api_service.model.pokemon.Pokemon
 
-val TAG = "!!!"
 
 class PokemonRepository(private val pokemonApi: PokemonApi) {
-
-    suspend fun pokemons(limit: Int, offset: Int): List<Pokemon> {
-        val response = pokemonApi.getPokemons(limit, offset)
-        val pokemonList = response.results.mapIndexedNotNull { index, pokemonResult ->
-            if (index % 3 == 0) {
-                val pokemonId = pokemonResult.url
-                    .removeSuffix("/")
-                    .substringAfterLast("/")
-                    .toInt()
-                pokemonApi.getPokemon(pokemonId)
-            } else {
-                null
+    private var nextUrl: String? = "${ApiConstants.BASE_URL}pokemon?limit=50}"
+    suspend fun pokemons(): List<Pokemon> {
+        return nextUrl?.let { url ->
+            val response = pokemonApi.getPokemons(url)
+            val pokemonList = response.results.mapIndexedNotNull { index, pokemonResult ->
+                if (index % 3 == 0) {
+                    val pokemonId = pokemonResult.url
+                        .removeSuffix("/")
+                        .substringAfterLast("/")
+                        .toInt()
+                    pokemonApi.getPokemon(pokemonId)
+                } else {
+                    null
+                }
             }
-        }
-        return pokemonList
+
+            nextUrl = response.next
+            pokemonList
+        } ?: emptyList()
+
     }
+
+
+
+
+
+
+
 
     suspend fun getSinglePokemon(id: Int): Pokemon {
         val pokemon = pokemonApi.getPokemon(id)

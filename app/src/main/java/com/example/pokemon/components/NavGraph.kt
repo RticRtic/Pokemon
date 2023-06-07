@@ -1,11 +1,13 @@
 package com.example.pokemon.components
 
+import com.example.pokemon.data.repository.PokemonRepository
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.pokemon.api_service.PokemonApi
 import com.example.pokemon.components.pokemonDetails.PokemonDetails
-import com.example.pokemon.data.repository.PokemonRepository
+
 
 @Composable
 
