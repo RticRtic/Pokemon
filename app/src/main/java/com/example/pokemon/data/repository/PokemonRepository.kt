@@ -1,11 +1,8 @@
 package com.example.pokemon.data.repository
 
-import android.util.Log
 import com.example.pokemon.api_service.ApiConstants
 import com.example.pokemon.api_service.PokemonApi
 import com.example.pokemon.api_service.model.pokemon.Pokemon
-
-val TAG = "!!!"
 
 class PokemonRepository(private val pokemonApi: PokemonApi) {
     private var nextUrl: String? = "${ApiConstants.BASE_URL}pokemon?limit=20}"

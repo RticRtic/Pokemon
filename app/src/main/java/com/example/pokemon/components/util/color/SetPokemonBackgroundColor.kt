@@ -1,4 +1,4 @@
-package com.example.pokemon.components.color
+package com.example.pokemon.components.util.color
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 

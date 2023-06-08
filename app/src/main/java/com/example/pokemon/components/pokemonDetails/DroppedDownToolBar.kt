@@ -31,9 +31,9 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.pokemon.R
 import com.example.pokemon.api_service.model.pokemon.PokemonSprite
-import com.example.pokemon.components.Sprite
-import com.example.pokemon.components.color.PokemonBackgroundColor
-import com.example.pokemon.components.color.habitatTextColor
+import com.example.pokemon.components.util.Sprite
+import com.example.pokemon.components.util.color.PokemonBackgroundColor
+import com.example.pokemon.components.util.color.habitatTextColor
 
 @Composable
 fun DroppedDownToolBar(

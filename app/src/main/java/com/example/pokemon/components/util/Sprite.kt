@@ -1,4 +1,4 @@
-package com.example.pokemon.components
+package com.example.pokemon.components.util
 
 import android.R
 import androidx.compose.foundation.layout.fillMaxSize

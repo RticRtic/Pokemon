@@ -25,8 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pokemon.api_service.model.pokemon.Ability
 import com.example.pokemon.api_service.model.pokemon.Pokemon
-import com.example.pokemon.components.color.PokemonBackgroundColor
-import com.example.pokemon.components.color.SurfaceColor
+import com.example.pokemon.components.util.color.SurfaceColor
 import com.example.pokemon.viewmodels.PokemonDetailsViewModel
 val TAG = "!!!"
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -48,7 +47,6 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
     val habitat = pokemon?.habitat
     val color = pokemon?.color
 
-    Log.d(TAG, "PokemonDetails: $color")
 
     LaunchedEffect(pokemonId) {
         viewModel.fetchPokemonDetails(pokemonId)
@@ -59,9 +57,6 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
             pokemonDetailState.value = pokemon
         }
     }
-
-
-
 
 
     val roundedBottomCornerShape = RoundedCornerShape(
