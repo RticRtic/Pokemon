@@ -36,8 +36,22 @@ class PokemonRepository(private val pokemonApi: PokemonApi) {
 
         val flavorTextEntry = species.flavor_text_entries
         val flavorText = flavorTextEntry.firstOrNull { it.language.name == "en" }?.flavor_text
-        return pokemon.copy(flavorText = flavorText ?: "")
+
+        val updatedPokemon = getPokemonHabitat(pokemon)
+
+        return updatedPokemon.copy(flavorText = flavorText.orEmpty())
     }
+
+    private suspend fun getPokemonHabitat(pokemon: Pokemon): Pokemon {
+        val speciesUrl = pokemon.species.url
+        val species = pokemonApi.getSpecies(speciesUrl)
+
+        val habitatUrl = species.habitat.url
+        val habitat = pokemonApi.getHabitat(habitatUrl)
+
+        return pokemon.copy(habitat = habitat.name)
+    }
+
 
 
 //    private suspend fun getEvolvedForms(id: Int): List<EvolutionSpecies> {

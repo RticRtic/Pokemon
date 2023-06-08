@@ -56,6 +56,7 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
     val pokemonHeight = pokemon?.height
     val pokemonWeight = pokemon?.weight
     val pokemonAbilities: List<Ability>? = pokemon?.abilities
+    val habitat = pokemon?.habitat
 
 
     val roundedBottomCornerShape = RoundedCornerShape(
@@ -84,7 +85,7 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
                 sprites = sprites ?: return@Scaffold,
                 pokemonHeight = pokemonHeight ?: 0,
                 pokemonWeight = pokemonWeight ?: 0,
-                pokemonAbilities = pokemonAbilities ?: emptyList()
+                habitat = habitat ?: ""
             )
 
         Box(

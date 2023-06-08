@@ -15,13 +15,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pokemon.api_service.model.pokemon.Ability
@@ -44,7 +41,8 @@ fun AbilitiesBox(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 5.dp, start = 20.dp)) {
-           Text(pokemon.flavorText, style = TextStyle(fontSize = 16.sp, fontFamily = FontFamily.Monospace))
+           Text(pokemon.flavorText ?: "", style = TextStyle(fontSize = 16.sp, fontFamily = FontFamily.Monospace))
+
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.pokemon.api_service
 
 import com.example.pokemon.api_service.model.evolvedPokemon.EvolutionChainResponse
+import com.example.pokemon.api_service.model.pokemon.Habitat
 import com.example.pokemon.api_service.model.pokemon.Pokemon
 import com.example.pokemon.api_service.model.pokemon.PokemonResponse
 import com.example.pokemon.api_service.model.pokemon.Species
@@ -19,6 +20,8 @@ interface PokemonApi {
 
     @GET
     suspend fun getSpecies(@Url url: String): Species
+    @GET
+    suspend fun getHabitat(@Url url: String): Habitat
 
     @GET("evolution-chain/{id}/")
     suspend fun getEvolutionChain(@Path("id") id: Int): EvolutionChainResponse

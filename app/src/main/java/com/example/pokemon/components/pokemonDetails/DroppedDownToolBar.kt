@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,13 +23,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.example.pokemon.api_service.model.pokemon.Ability
+import com.example.pokemon.R
 import com.example.pokemon.api_service.model.pokemon.PokemonSprite
 import com.example.pokemon.components.Sprite
 import com.example.pokemon.components.setRandomColor
@@ -38,13 +39,13 @@ fun DroppedDownToolBar(
     roundedBottomCornerShape: RoundedCornerShape,
     navController: NavController,
     pokemonName: String,
+    habitat: String,
     sprites: PokemonSprite,
     pokemonHeight: Int,
     pokemonWeight: Int,
-    pokemonAbilities: List<Ability>
 
 
-) {
+    ) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -52,31 +53,62 @@ fun DroppedDownToolBar(
             .background(setRandomColor(), shape = roundedBottomCornerShape)
             .border(1.dp, Color.Black, roundedBottomCornerShape)
     ) {
-        Column(modifier = Modifier.align(Alignment.Center)) {
-            BoxWithBackgroundImage(url = sprites.other?.officialArtwork?.front_default ?: "")
-        }
-        Row(modifier = Modifier.align(Alignment.TopStart)) {
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.Black
-                )
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(270.dp)
+                .background(setRandomColor(), shape = roundedBottomCornerShape)
+                .border(1.dp, Color.Black, roundedBottomCornerShape)
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.Black
+                        )
+                    }
+                    Text(
+                        text = pokemonName.uppercase(),
+                        style = TextStyle(
+                            fontSize = 24.sp,
+                            color = Color.Black
+                        )
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    HabitatIcon(habitat = habitat)
+                    Text(
+                        text = habitat,
+                        style = TextStyle(
+                            fontSize = 24.sp,
+                            color = Color.Black
+                        ),
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                }
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)) {
+                    Column(Modifier.align(Alignment.Center)) {
+                        BoxWithBackgroundImage(url = sprites.other?.officialArtwork?.front_default ?: "")
+                    }
+
+                }
+
             }
-            Text(
-                text = pokemonName.uppercase(),
-                modifier = Modifier.padding(top = 8.dp),
-                style = TextStyle(
-                    fontSize = 24.sp,
-                    textAlign = TextAlign.Start,
-                    color = Color.Black
-                )
-            )
         }
 
-        Column(modifier = Modifier
-            .align(Alignment.Center)
-            .padding(top = 20.dp)) {
+        Column(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(top = 20.dp)
+        ) {
             Row {
                 Sprite(
                     url = "",
@@ -89,13 +121,44 @@ fun DroppedDownToolBar(
             }
 
             Box(modifier = Modifier.weight(1f)) {
-                Row(modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp),horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text(text = "Height: $pokemonHeight", style = TextStyle(color = Color.Black, fontSize = 20.sp))
-                    Text(text = "Weight: $pokemonWeight", style = TextStyle(color = Color.Black, fontSize = 20.sp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 20.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Height: $pokemonHeight",
+                        style = TextStyle(color = Color.Black, fontSize = 20.sp)
+                    )
+                    Text(
+                        text = "Weight: $pokemonWeight",
+                        style = TextStyle(color = Color.Black, fontSize = 20.sp)
+                    )
 
                 }
             }
         }
+    }
+}
+
+@Composable
+fun HabitatIcon(habitat: String) {
+    val imageResource = when (habitat) {
+        "cave" -> R.drawable.cave
+        "forest" -> R.drawable.forest
+        "grassland" -> R.drawable.grass
+        "mountain" -> R.drawable.mountain
+        "rare" -> R.drawable.star
+        "rough-terrain" -> R.drawable.rough_terrain
+        "waters-edge" -> R.drawable.water
+        "urban" -> R.drawable.urban
+        "sea" -> R.drawable.sea
+        else -> null
+    }
+
+    imageResource?.let {
+        Image(painterResource(id = it), contentDescription = null, modifier = Modifier.size(30.dp))
     }
 }
 

@@ -5,10 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 
 @Parcelize
-data class Species(
+data class Habitat(
     val name: String,
-    var url: String,
-    val flavor_text_entries: List<FlavorTextEntry>,
-    val language: Language,
-    val habitat: Habitat,
+    val url: String,
 ): Parcelable
