@@ -32,7 +32,8 @@ import coil.compose.rememberImagePainter
 import com.example.pokemon.R
 import com.example.pokemon.api_service.model.pokemon.PokemonSprite
 import com.example.pokemon.components.Sprite
-import com.example.pokemon.components.setRandomColor
+import com.example.pokemon.components.color.PokemonBackgroundColor
+import com.example.pokemon.components.color.habitatTextColor
 
 @Composable
 fun DroppedDownToolBar(
@@ -40,6 +41,7 @@ fun DroppedDownToolBar(
     navController: NavController,
     pokemonName: String,
     habitat: String,
+    color: String,
     sprites: PokemonSprite,
     pokemonHeight: Int,
     pokemonWeight: Int,
@@ -50,7 +52,6 @@ fun DroppedDownToolBar(
         modifier = Modifier
             .fillMaxWidth()
             .height(270.dp)
-            .background(setRandomColor(), shape = roundedBottomCornerShape)
             .border(1.dp, Color.Black, roundedBottomCornerShape)
     ) {
 
@@ -58,7 +59,7 @@ fun DroppedDownToolBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(270.dp)
-                .background(setRandomColor(), shape = roundedBottomCornerShape)
+                .background(PokemonBackgroundColor(color = color), shape = roundedBottomCornerShape)
                 .border(1.dp, Color.Black, roundedBottomCornerShape)
         ) {
             Column(
@@ -87,7 +88,7 @@ fun DroppedDownToolBar(
                         text = habitat,
                         style = TextStyle(
                             fontSize = 24.sp,
-                            color = Color.Black
+                            color = habitatTextColor(habitat = habitat)
                         ),
                         modifier = Modifier.align(Alignment.CenterVertically)
                     )

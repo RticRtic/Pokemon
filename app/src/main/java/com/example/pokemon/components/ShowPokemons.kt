@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.pokemon.components.color.PokemonBackgroundColor
 
 
 val TAG = "!!!"
@@ -73,13 +74,14 @@ fun ShowPokemons(navController: NavController, repository: PokemonRepository) {
                                 modifier = Modifier
                                     .padding(5.dp)
                                     .background(
-                                        color = setRandomColor(),
+                                        color = PokemonBackgroundColor(color = pokemonList[pokemon].color),
                                         shape = RoundedCornerShape(8.dp)
                                     )
                                     .border(
                                         width = 1.dp,
                                         color = Color.Black,
-                                        shape = RoundedCornerShape(8.dp))
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
 
                                     .clickable {
                                         val pokemonData = pokemonList[pokemon]

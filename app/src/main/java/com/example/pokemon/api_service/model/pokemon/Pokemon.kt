@@ -20,4 +20,5 @@ data class Pokemon(
     val genera: String?,
     val evolutionChain: EvolutionChain?,
     val flavorText: String?,
+    val color: String?,
     ): Parcelable

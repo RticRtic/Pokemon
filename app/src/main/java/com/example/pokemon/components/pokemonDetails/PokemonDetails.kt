@@ -12,10 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -27,6 +25,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pokemon.api_service.model.pokemon.Ability
 import com.example.pokemon.api_service.model.pokemon.Pokemon
+import com.example.pokemon.components.color.PokemonBackgroundColor
+import com.example.pokemon.components.color.SurfaceColor
 import com.example.pokemon.viewmodels.PokemonDetailsViewModel
 val TAG = "!!!"
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -37,6 +37,18 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
     val pokemonDetailState = remember {
         mutableStateOf<Pokemon?>(null)
     }
+
+    val pokemon = pokemonDetailState.value
+    val pokemonName = pokemon?.name
+    val sprites = pokemon?.sprites
+    val stats = pokemon?.stats
+    val pokemonHeight = pokemon?.height
+    val pokemonWeight = pokemon?.weight
+    val pokemonAbilities: List<Ability>? = pokemon?.abilities
+    val habitat = pokemon?.habitat
+    val color = pokemon?.color
+
+    Log.d(TAG, "PokemonDetails: $color")
 
     LaunchedEffect(pokemonId) {
         viewModel.fetchPokemonDetails(pokemonId)
@@ -49,14 +61,7 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
     }
 
 
-    val pokemon = pokemonDetailState.value
-    val pokemonName = pokemon?.name
-    val sprites = pokemon?.sprites
-    val stats = pokemon?.stats
-    val pokemonHeight = pokemon?.height
-    val pokemonWeight = pokemon?.weight
-    val pokemonAbilities: List<Ability>? = pokemon?.abilities
-    val habitat = pokemon?.habitat
+
 
 
     val roundedBottomCornerShape = RoundedCornerShape(
@@ -73,7 +78,7 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight(),
-            color = MaterialTheme.colorScheme.secondaryContainer
+            color = SurfaceColor(color = color ?: ""),
         ) {
 
         }
@@ -85,7 +90,8 @@ fun PokemonDetails(navController: NavController, pokemonId: Int) {
                 sprites = sprites ?: return@Scaffold,
                 pokemonHeight = pokemonHeight ?: 0,
                 pokemonWeight = pokemonWeight ?: 0,
-                habitat = habitat ?: ""
+                habitat = habitat ?: "",
+                color = color ?: ""
             )
 
         Box(

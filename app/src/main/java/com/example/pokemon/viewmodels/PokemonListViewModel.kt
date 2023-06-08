@@ -9,8 +9,6 @@ import com.example.pokemon.api_service.RetrofitInstance
 import com.example.pokemon.api_service.model.pokemon.Pokemon
 import kotlinx.coroutines.launch
 
-val TAG = "!!!"
-
 class PokemonListViewModel() : ViewModel() {
 
     private val repository = PokemonRepository(RetrofitInstance.api)
@@ -26,5 +24,7 @@ class PokemonListViewModel() : ViewModel() {
 
         }
     }
+
+
 }
 

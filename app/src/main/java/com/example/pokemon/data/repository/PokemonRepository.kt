@@ -19,6 +19,7 @@ class PokemonRepository(private val pokemonApi: PokemonApi) {
                         .substringAfterLast("/")
                         .toInt()
                     pokemonApi.getPokemon(pokemonId)
+                    getColor(pokemonApi.getPokemon(pokemonId))
                 } else {
                     null
                 }
@@ -36,7 +37,6 @@ class PokemonRepository(private val pokemonApi: PokemonApi) {
 
         val flavorTextEntry = species.flavor_text_entries
         val flavorText = flavorTextEntry.firstOrNull { it.language.name == "en" }?.flavor_text
-
         val updatedPokemon = getPokemonHabitat(pokemon)
 
         return updatedPokemon.copy(flavorText = flavorText.orEmpty())
@@ -48,8 +48,19 @@ class PokemonRepository(private val pokemonApi: PokemonApi) {
 
         val habitatUrl = species.habitat.url
         val habitat = pokemonApi.getHabitat(habitatUrl)
+        val updatedPokemon = getColor(pokemon)
 
-        return pokemon.copy(habitat = habitat.name)
+        return updatedPokemon.copy(habitat = habitat.name)
+    }
+    
+    private suspend fun getColor(pokemon: Pokemon): Pokemon {
+        val speciesUrl = pokemon.species.url
+        val species = pokemonApi.getSpecies(speciesUrl)
+        
+        val colorUrl = species.color?.url
+        val color = pokemonApi.getColor(colorUrl ?: "")
+        
+        return pokemon.copy(color = color.name)
     }
 
 
