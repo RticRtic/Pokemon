@@ -57,43 +57,33 @@ fun BaseStatGrid (stats: List<Stats>) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    if (iconHeart) {
-                        Icon(
+                    when {
+                        iconHeart -> Icon(
                             Icons.Default.Favorite,
                             contentDescription = "Hp",
                             tint = Color(0xffC24641)
                         )
-                    }
-                    if (iconStar) {
-                        Icon(
+                        iconStar -> Icon(
                             Icons.Default.Star,
                             contentDescription = "Attack",
                             tint = Color(0xffFFCE44)
                         )
-                    }
-                    if (iconShield) {
-                        Icon(
+                        iconShield -> Icon(
                             Icons.Default.Shield,
                             contentDescription = "Defense",
                             tint = Color(0xff4E5180)
                         )
-                    }
-                    if (iconSpecialDefense) {
-                        Icon(
+                        iconSpecialDefense -> Icon(
                             Icons.Default.ShieldMoon,
                             contentDescription = "Special Defense",
                             tint = Color(0xff2E1A47)
                         )
-                    }
-                    if (iconSpecialAttack) {
-                        Icon(
+                        iconSpecialAttack -> Icon(
                             Icons.Default.SportsMartialArts,
                             contentDescription = "Special Attack",
                             tint = Color(0xffF0E68C)
                         )
-                    }
-                    if (iconSpeed) {
-                        Icon(
+                        iconSpeed -> Icon(
                             Icons.Default.ShutterSpeed,
                             contentDescription = "Speed",
                             tint = Color(0xff00FF7F)

@@ -45,7 +45,7 @@ import com.example.pokemon.components.util.color.pokemonBackgroundColor
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ShowPokemonsView(navController: NavController, repository: PokemonRepository) {
+fun ShowPokemonsView(navController: NavController) {
     val viewModel: PokemonListViewModel = viewModel()
     val pokemonListState = viewModel.pokemonList.observeAsState(initial = emptyList())
     val pokemonList = pokemonListState.value
@@ -88,7 +88,16 @@ fun ShowPokemonsView(navController: NavController, repository: PokemonRepository
                         onValueChanged = { searchTextState.value = it })
                     val filteredPokemonList = remember(searchTextState.value, pokemonList) {
                         pokemonList.filter {
-                            it.name.contains(searchTextState.value, ignoreCase = true) || it.color?.contains(searchTextState.value, ignoreCase = true) ?: false
+                            it.name.contains(
+                                searchTextState.value,
+                                ignoreCase = true
+                            ) || it.color?.contains(
+                                searchTextState.value,
+                                ignoreCase = true
+                            ) ?: false || it.habitat?.contains(
+                                searchTextState.value,
+                                ignoreCase = true
+                            ) ?: false
                         }
                     }
                     LazyVerticalGrid(columns = GridCells.Fixed(3)) {
@@ -116,7 +125,8 @@ fun ShowPokemonsView(navController: NavController, repository: PokemonRepository
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                     Sprite(
                                         url = filteredPokemonList[pokemon].sprites.other?.home?.front_default
-                                            ?: "")
+                                            ?: ""
+                                    )
                                     Text(
                                         text = filteredPokemonList[pokemon].name.uppercase(),
                                         style = TextStyle(

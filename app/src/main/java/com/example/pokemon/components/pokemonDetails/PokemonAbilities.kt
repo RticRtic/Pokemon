@@ -77,28 +77,26 @@ fun PokemonAbilities(pokemonAbilities: List<Ability>) {
                             )
                         )
 
-                        if (firstAttack) {
-                            Icon(
-                                Icons.Default.LooksOne,
-                                contentDescription = "Special",
-                                tint = Color.White
-                            )
-                        }
+                        when {
+                            firstAttack ->
+                                Icon(
+                                    Icons.Default.LooksOne,
+                                    contentDescription = "Special",
+                                    tint = Color.White
+                                )
+                            secondAttack ->
+                                Icon(
+                                    Icons.Default.LooksTwo,
+                                    contentDescription = "Special",
+                                    tint = Color.White
+                                )
 
-                        if (secondAttack) {
-                            Icon(
-                                Icons.Default.LooksTwo,
-                                contentDescription = "Special",
-                                tint = Color.White
-                            )
-                        }
-
-                        if (thirdAttack) {
-                            Icon(
-                                Icons.Default.Looks3,
-                                contentDescription = "Special",
-                                tint = Color.White
-                            )
+                            thirdAttack ->
+                                Icon(
+                                    Icons.Default.Looks3,
+                                    contentDescription = "Special",
+                                    tint = Color.White
+                                )
                         }
                     }
                 }

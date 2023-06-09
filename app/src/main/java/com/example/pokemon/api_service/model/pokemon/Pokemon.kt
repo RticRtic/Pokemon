@@ -1,8 +1,6 @@
 package com.example.pokemon.api_service.model.pokemon
 
 import android.os.Parcelable
-import com.example.pokemon.api_service.model.evolvedPokemon.EvolutionChain
-import com.example.pokemon.api_service.model.evolvedPokemon.EvolutionSpecies
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
