@@ -48,8 +48,10 @@ fun DroppedDownToolBar(
     pokemonHeight: Int,
     pokemonWeight: Int,
 
-
     ) {
+
+    val pokemonWeigthInKg: Double = pokemonWeight / 10.0
+    val pokemonHeightInCm: Double = pokemonHeight * 10.0
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -137,18 +139,18 @@ fun DroppedDownToolBar(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Height: $pokemonHeight",
+                        text = "Height: $pokemonHeightInCm cm",
                         style = TextStyle(
                             color = if (pokemonBackgroundColor(color = color) == Color.Black) Color.White else Color.Black,
-                            fontSize = 20.sp,
+                            fontSize = 15.sp,
                             fontFamily = FontFamily.Cursive
                         )
                     )
                     Text(
-                        text = "Weight: $pokemonWeight",
+                        text = "Weight: $pokemonWeigthInKg kg",
                         style = TextStyle(
                             color = if (pokemonBackgroundColor(color = color) == Color.Black) Color.White else Color.Black,
-                            fontSize = 20.sp,
+                            fontSize = 15.sp,
                             fontFamily = FontFamily.Cursive
                         )
                     )

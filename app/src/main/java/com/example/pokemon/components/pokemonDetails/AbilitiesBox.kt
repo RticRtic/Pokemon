@@ -58,7 +58,7 @@ fun AbilitiesBox(
                     fontSize = 24.sp,
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
-                    fontFamily = FontFamily.Monospace
+                    fontFamily = FontFamily.Cursive
                 )
             )
         }
