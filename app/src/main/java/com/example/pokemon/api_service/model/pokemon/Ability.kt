@@ -5,5 +5,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Ability(
-    val ability: Stat
+    val ability: Stat?
 ): Parcelable

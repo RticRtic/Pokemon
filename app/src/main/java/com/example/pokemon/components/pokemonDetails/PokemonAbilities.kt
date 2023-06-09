@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -50,7 +51,7 @@ fun PokemonAbilities(pokemonAbilities: List<Ability>) {
                     .size(width = 50.dp, height = 50.dp)
                     .padding(start = 5.dp, top = 10.dp, end = 4.dp, bottom = 5.dp)
                     .background(
-                        color = Color.DarkGray,
+                        color = Color(0xff737CA1),
                         shape = RoundedCornerShape(10.dp)
                     )
                     .border(
@@ -68,7 +69,7 @@ fun PokemonAbilities(pokemonAbilities: List<Ability>) {
 
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                         Text(
-                            text = abilities.ability.name,
+                            text = abilities.ability?.name ?: "",
                             style = TextStyle(
                                 color = Color.White,
                                 fontSize = 17.sp,
@@ -76,28 +77,26 @@ fun PokemonAbilities(pokemonAbilities: List<Ability>) {
                             )
                         )
 
-                        if (firstAttack) {
-                            Icon(
-                                Icons.Default.LooksOne,
-                                contentDescription = "Special",
-                                tint = Color.White
-                            )
-                        }
+                        when {
+                            firstAttack ->
+                                Icon(
+                                    Icons.Default.LooksOne,
+                                    contentDescription = "Special",
+                                    tint = Color.White
+                                )
+                            secondAttack ->
+                                Icon(
+                                    Icons.Default.LooksTwo,
+                                    contentDescription = "Special",
+                                    tint = Color.White
+                                )
 
-                        if (secondAttack) {
-                            Icon(
-                                Icons.Default.LooksTwo,
-                                contentDescription = "Special",
-                                tint = Color.White
-                            )
-                        }
-
-                        if (thirdAttack) {
-                            Icon(
-                                Icons.Default.Looks3,
-                                contentDescription = "Special",
-                                tint = Color.White
-                            )
+                            thirdAttack ->
+                                Icon(
+                                    Icons.Default.Looks3,
+                                    contentDescription = "Special",
+                                    tint = Color.White
+                                )
                         }
                     }
                 }

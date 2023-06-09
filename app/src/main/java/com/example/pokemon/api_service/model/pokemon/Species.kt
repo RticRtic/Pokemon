@@ -10,6 +10,6 @@ data class Species(
     var url: String,
     val flavor_text_entries: List<FlavorTextEntry>,
     val language: Language,
-    val habitat: Habitat,
+    val habitat: Habitat?,
     val color: PokemonColor?,
 ): Parcelable

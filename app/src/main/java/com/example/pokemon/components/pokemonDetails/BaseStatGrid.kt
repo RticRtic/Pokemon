@@ -1,6 +1,7 @@
 package com.example.pokemon.components.pokemonDetails
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -43,55 +45,48 @@ fun BaseStatGrid (stats: List<Stats>) {
                 modifier = Modifier
                     .size(width = 100.dp, height = 100.dp)
                     .padding(8.dp)
+                    .border(1.dp, Color.White, RoundedCornerShape(100.dp))
                     .background(
-                        color = Color.DarkGray,
+                        color = Color(0xff657383),
                         shape = RoundedCornerShape(100.dp)
+
                     ),
                 contentAlignment = Alignment.Center
+
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    if (iconHeart) {
-                        Icon(
+                    when {
+                        iconHeart -> Icon(
                             Icons.Default.Favorite,
                             contentDescription = "Hp",
-                            tint = Color.Red
+                            tint = Color(0xffC24641)
                         )
-                    }
-                    if (iconStar) {
-                        Icon(
+                        iconStar -> Icon(
                             Icons.Default.Star,
                             contentDescription = "Attack",
-                            tint = Color.Yellow
+                            tint = Color(0xffFFCE44)
                         )
-                    }
-                    if (iconShield) {
-                        Icon(
+                        iconShield -> Icon(
                             Icons.Default.Shield,
                             contentDescription = "Defense",
-                            tint = Color.Blue
+                            tint = Color(0xff4E5180)
                         )
-                    }
-                    if (iconSpecialDefense) {
-                        Icon(
+                        iconSpecialDefense -> Icon(
                             Icons.Default.ShieldMoon,
                             contentDescription = "Special Defense",
-                            tint = Color.Blue
+                            tint = Color(0xff2E1A47)
                         )
-                    }
-                    if (iconSpecialAttack) {
-                        Icon(
+                        iconSpecialAttack -> Icon(
                             Icons.Default.SportsMartialArts,
                             contentDescription = "Special Attack",
-                            tint = Color.Yellow
+                            tint = Color(0xffF0E68C)
                         )
-                    }
-                    if (iconSpeed) {
-                        Icon(
+                        iconSpeed -> Icon(
                             Icons.Default.ShutterSpeed,
                             contentDescription = "Speed",
-                            tint = Color.Green
+                            tint = Color(0xff00FF7F)
                         )
                     }
                     Text(
