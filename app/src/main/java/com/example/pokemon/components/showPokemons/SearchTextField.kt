@@ -1,11 +1,14 @@
-package com.example.pokemon.components
+package com.example.pokemon.components.showPokemons
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -15,11 +18,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchTextField(text: String, onValueChanged: (String) -> Unit) {
+fun SearchTextField(
+    text: String,
+    isLoading: Boolean,
+    onValueChanged: (String) -> Unit) {
     Box(modifier = Modifier
         .fillMaxWidth()
         .padding(5.dp), contentAlignment = Alignment.Center)
@@ -30,6 +37,9 @@ fun SearchTextField(text: String, onValueChanged: (String) -> Unit) {
              modifier = Modifier.fillMaxWidth(),
              shape = RoundedCornerShape(30.dp),
              leadingIcon = {Icon(Icons.Default.Search, contentDescription = "Search")},
+             trailingIcon = {if (isLoading) {
+                CircularProgressIndicator()
+             } },
              label = { Text("Search ...") },
              colors = TextFieldDefaults.textFieldColors(
                 focusedIndicatorColor = Color.Transparent,

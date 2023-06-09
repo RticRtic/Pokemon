@@ -7,4 +7,30 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    //Surface Colors
+    <color name="surface_red">#FFCB6D51</color>
+    <color name="surface_blue">#FF92C7C7</color>
+    <color name="surface_yellow">#FFF0E68C</color>
+    <color name="surface_green">#FF99C68E</color>
+    <color name="surface_black">#FF93917C</color>
+    <color name="surface_brown">#FFE2A76F</color>
+    <color name="surface_purple">#FFECC5C0</color>
+    <color name="surface_gray">#FFEBDDE2</color>
+    <color name="surface_white">#FFE9E4D4</color>
+
+
+    //Pokemoncard background-colors
+
+    <color name="background_red">#FFC04020</color>
+    <color name="background_blue">#FF3B9C9C</color>
+    <color name="background_yellow">#FFE9AB17</color>
+    <color name="background_green">#FF9CB071</color>
+    <color name="background_black">#FF000000</color>
+    <color name="background_brown">#FF8B4513</color>
+    <color name="background_purple">#FFC38EC7</color>
+    <color name="background_gray">#FF93917C</color>
+    <color name="background_white">#FFFAF5EF</color>
+
+
 </resources>

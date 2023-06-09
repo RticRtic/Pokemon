@@ -23,8 +23,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -32,7 +34,7 @@ import coil.compose.rememberImagePainter
 import com.example.pokemon.R
 import com.example.pokemon.api_service.model.pokemon.PokemonSprite
 import com.example.pokemon.components.util.Sprite
-import com.example.pokemon.components.util.color.PokemonBackgroundColor
+import com.example.pokemon.components.util.color.pokemonBackgroundColor
 import com.example.pokemon.components.util.color.habitatTextColor
 
 @Composable
@@ -59,7 +61,7 @@ fun DroppedDownToolBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(270.dp)
-                .background(PokemonBackgroundColor(color = color), shape = roundedBottomCornerShape)
+                .background(pokemonBackgroundColor(color = color), shape = roundedBottomCornerShape)
                 .border(1.dp, Color.Black, roundedBottomCornerShape)
         ) {
             Column(
@@ -71,15 +73,16 @@ fun DroppedDownToolBar(
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.Black
+                            contentDescription = null,
+                            tint = if (pokemonBackgroundColor(color = color) == Color.Black) Color.White else Color.Black
                         )
                     }
                     Text(
                         text = pokemonName.uppercase(),
                         style = TextStyle(
                             fontSize = 24.sp,
-                            color = Color.Black
+                            color = if (pokemonBackgroundColor(color = color) == Color.Black) Color.White else Color.Black,
+                            fontFamily = FontFamily.Cursive
                         )
                     )
                     Spacer(modifier = Modifier.weight(1f))
@@ -87,17 +90,22 @@ fun DroppedDownToolBar(
                     Text(
                         text = habitat,
                         style = TextStyle(
-                            fontSize = 24.sp,
-                            color = habitatTextColor(habitat = habitat)
+                            fontSize = 20.sp,
+                            color = if (pokemonBackgroundColor(color = color) == Color.Black) Color.White else habitatTextColor(habitat = habitat),
+                            fontFamily = FontFamily.Monospace
                         ),
                         modifier = Modifier.align(Alignment.CenterVertically)
                     )
                 }
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1f)) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                ) {
                     Column(Modifier.align(Alignment.Center)) {
-                        BoxWithBackgroundImage(url = sprites.other?.officialArtwork?.front_default ?: "")
+                        BoxWithBackgroundImage(
+                            url = sprites.other?.officialArtwork?.front_default ?: ""
+                        )
                     }
 
                 }
@@ -130,11 +138,19 @@ fun DroppedDownToolBar(
                 ) {
                     Text(
                         text = "Height: $pokemonHeight",
-                        style = TextStyle(color = Color.Black, fontSize = 20.sp)
+                        style = TextStyle(
+                            color = if (pokemonBackgroundColor(color = color) == Color.Black) Color.White else Color.Black,
+                            fontSize = 20.sp,
+                            fontFamily = FontFamily.Cursive
+                        )
                     )
                     Text(
                         text = "Weight: $pokemonWeight",
-                        style = TextStyle(color = Color.Black, fontSize = 20.sp)
+                        style = TextStyle(
+                            color = if (pokemonBackgroundColor(color = color) == Color.Black) Color.White else Color.Black,
+                            fontSize = 20.sp,
+                            fontFamily = FontFamily.Cursive
+                        )
                     )
 
                 }
@@ -169,7 +185,8 @@ fun BoxWithBackgroundImage(url: String) {
         Image(
             painter = rememberImagePainter(data = url),
             contentDescription = null,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
         )
     }
 }

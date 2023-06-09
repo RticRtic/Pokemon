@@ -2,22 +2,24 @@ package com.example.pokemon.components.util.color
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import com.example.pokemon.R
 
 @Composable
-fun SurfaceColor(color: String?): Color {
+fun surfaceColor(color: String?): Color {
     return if (color.isNullOrEmpty()) {
         Color.Gray
     } else {
         when (color) {
-            "red" -> Color(0xffCB6D51)
-            "blue" ->  Color(0xff92C7C7)
-            "yellow" -> Color(0xffF0E68C)
-            "green" -> Color(0xff99C68E)
-            "black" -> Color(0xff93917C)
-            "brown" -> Color(0xffE2A76F)
-            "purple" -> Color(0xffECC5C0)
-            "gray" -> Color(0xffEBDDE2)
-            "white" -> Color(0xffE9E4D4)
+            "red" -> colorResource(id = R.color.surface_red)
+            "blue" ->  colorResource(id = R.color.surface_blue)
+            "yellow" -> colorResource(id = R.color.surface_yellow)
+            "green" -> colorResource(id = R.color.surface_green)
+            "black" -> colorResource(id = R.color.surface_black)
+            "brown" -> colorResource(id = R.color.surface_brown)
+            "purple" -> colorResource(id = R.color.surface_purple)
+            "gray" -> colorResource(id = R.color.surface_gray)
+            "white" -> colorResource(id = R.color.surface_white)
 
             else -> Color.LightGray
         }

@@ -16,15 +16,17 @@ class PokemonListViewModel() : ViewModel() {
     private val _pokemonList = MutableLiveData<List<Pokemon>>()
     val pokemonList: LiveData<List<Pokemon>> = _pokemonList
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
     fun fetchPokemons() {
+        _isLoading.value = true
         viewModelScope.launch {
             val pokemons = repository.pokemons()
             val currentPokemons = _pokemonList.value.orEmpty()
             _pokemonList.value = currentPokemons + pokemons
-
+            _isLoading.value = false
         }
     }
-
-
 }
 

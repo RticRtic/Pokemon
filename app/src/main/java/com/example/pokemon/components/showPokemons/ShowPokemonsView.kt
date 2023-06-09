@@ -1,6 +1,8 @@
 package com.example.pokemon.components.showPokemons
 
 import android.annotation.SuppressLint
+import android.util.Log
+import androidx.compose.foundation.Image
 import com.example.pokemon.data.repository.PokemonRepository
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -15,7 +17,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -30,16 +31,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.pokemon.components.SearchTextField
+import com.example.pokemon.R
 import com.example.pokemon.components.util.Sprite
-import com.example.pokemon.components.util.color.PokemonBackgroundColor
-import com.example.pokemon.components.util.color.SurfaceColor
+import com.example.pokemon.components.util.color.pokemonBackgroundColor
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,6 +50,7 @@ fun ShowPokemonsView(navController: NavController, repository: PokemonRepository
     val pokemonListState = viewModel.pokemonList.observeAsState(initial = emptyList())
     val pokemonList = pokemonListState.value
     val searchTextState = remember { mutableStateOf("") }
+    val isLoading = viewModel.isLoading.observeAsState(initial = false)
 
     Scaffold {
         Surface(
@@ -64,36 +66,38 @@ fun ShowPokemonsView(navController: NavController, repository: PokemonRepository
             }
         }
 
-        if (pokemonList.isEmpty()) {
+        if (pokemonList.isEmpty() && isLoading.value) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator()
+                Image(
+                    painter = painterResource(id = R.drawable.pokemon_logo),
+                    contentDescription = null
+                )
             }
         } else {
             Box(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.TopCenter
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     SearchTextField(
                         searchTextState.value,
+                        isLoading.value,
                         onValueChanged = { searchTextState.value = it })
-                    val filteredPokemonList = pokemonList.filter {
-                        it.name.contains(
-                            searchTextState.value,
-                            ignoreCase = true
-                        )
+                    val filteredPokemonList = remember(searchTextState.value, pokemonList) {
+                        pokemonList.filter {
+                            it.name.contains(searchTextState.value, ignoreCase = true) || it.color?.contains(searchTextState.value, ignoreCase = true) ?: false
+                        }
                     }
-
                     LazyVerticalGrid(columns = GridCells.Fixed(3)) {
                         items(filteredPokemonList.size) { pokemon ->
                             Box(
                                 modifier = Modifier
                                     .padding(5.dp)
                                     .background(
-                                        color = PokemonBackgroundColor(color = filteredPokemonList[pokemon].color),
+                                        color = pokemonBackgroundColor(color = filteredPokemonList[pokemon].color),
                                         shape = RoundedCornerShape(8.dp)
                                     )
                                     .border(
@@ -109,12 +113,10 @@ fun ShowPokemonsView(navController: NavController, repository: PokemonRepository
                                 contentAlignment = Alignment.Center,
 
                                 ) {
-
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                     Sprite(
                                         url = filteredPokemonList[pokemon].sprites.other?.home?.front_default
-                                            ?: ""
-                                    )
+                                            ?: "")
                                     Text(
                                         text = filteredPokemonList[pokemon].name.uppercase(),
                                         style = TextStyle(
@@ -125,7 +127,12 @@ fun ShowPokemonsView(navController: NavController, repository: PokemonRepository
                                         modifier = Modifier
                                             .background(
                                                 Color.White,
-                                                RoundedCornerShape(0.dp, 0.dp, 8.dp, 8.dp)
+                                                RoundedCornerShape(30.dp, 30.dp, 8.dp, 8.dp)
+                                            )
+                                            .border(
+                                                width = 1.dp,
+                                                color = Color.Black,
+                                                shape = RoundedCornerShape(30.dp, 30.dp, 8.dp, 8.dp)
                                             )
                                             .fillMaxWidth()
                                             .height(40.dp)
@@ -135,7 +142,9 @@ fun ShowPokemonsView(navController: NavController, repository: PokemonRepository
                             }
                         }
                         item {
-                            viewModel.fetchPokemons()
+                            if (!isLoading.value && filteredPokemonList.isNotEmpty()) {
+                                viewModel.fetchPokemons()
+                            }
                         }
                     }
                 }

@@ -57,7 +57,8 @@ fun AbilitiesBox(
                 style = TextStyle(
                     fontSize = 24.sp,
                     textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = FontFamily.Monospace
                 )
             )
         }
@@ -67,8 +68,7 @@ fun AbilitiesBox(
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .height(boxHeight)
-            .background(color = Color.White, shape = RoundedCornerShape(10.dp))
-            .border(1.dp, Color.Black, RoundedCornerShape(10.dp))
+            .background(color = Color.Transparent, shape = RoundedCornerShape(10.dp))
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
